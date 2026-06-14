@@ -1,0 +1,66 @@
+---
+const navLinks = [
+  { href: '/', label: '首页' },
+  { href: '/programming', label: '编程开发' },
+  { href: '/design', label: '设计创意' },
+  { href: '/writing', label: '写作内容' },
+  { href: '/marketing', label: '营销增长' },
+  { href: '/tools', label: '工具' },
+  { href: '/about', label: '关于' },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-orange-100 shadow-sm">
+  <nav class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 no-underline">
+      <span class="text-2xl">🆓</span>
+      <span class="font-bold text-lg text-stone-800">自由赚钱指南</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <div class="hidden md:flex items-center gap-6">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class="text-sm text-stone-500 hover:text-orange-500 transition-colors no-underline"
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="menu-toggle"
+      class="md:hidden text-stone-600 p-2"
+      aria-label="Toggle menu"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 12h18M3 6h18M3 18h18"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden bg-white border-t border-orange-50 px-4 py-3"
+  >
+    {navLinks.map(link => (
+      <a
+        href={link.href}
+        class="block py-2 text-sm text-stone-600 hover:text-orange-500 no-underline"
+      >
+        {link.label}
+      </a>
+    ))}
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+</script>

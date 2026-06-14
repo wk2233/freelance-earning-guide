@@ -1,0 +1,124 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubscribeCTA from '../../components/SubscribeCTA.astro';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map(a => ({
+    params: {
+      category: a.data.category,
+      slug: a.slug,
+    },
+    props: { article: a },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content, headings } = await article.render();
+
+// Get related articles (same category, exclude current)
+const allArticles = await getCollection('articles');
+const relatedArticles = allArticles
+  .filter(a => a.data.category === article.data.category && a.slug !== article.slug)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const categoryLabel: Record<string, string> = {
+  programming: '编程开发',
+  design: '设计创意',
+  writing: '写作内容',
+  marketing: '营销增长',
+};
+---
+
+<BaseLayout
+  title={article.data.title}
+  description={article.data.description}
+  ogType="article"
+>
+
+<article class="max-w-3xl mx-auto px-4 py-8">
+  <!-- Breadcrumb -->
+  <nav class="text-sm text-stone-400 mb-6">
+    <a href="/" class="hover:text-orange-500 no-underline">首页</a>
+    <span class="mx-2">/</span>
+    <a href={`/${article.data.category}`} class="hover:text-orange-500 no-underline">
+      {categoryLabel[article.data.category] || article.data.category}
+    </a>
+  </nav>
+
+  <!-- Article Header -->
+  <header class="mb-8">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="text-xs font-medium text-orange-500 bg-orange-50 px-2 py-0.5 rounded-full">
+        {categoryLabel[article.data.category]}
+      </span>
+      <span class="text-xs text-stone-400">
+        {article.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </span>
+      {article.data.readingTime && (
+        <span class="text-xs text-stone-400">· {article.data.readingTime} min 阅读</span>
+      )}
+    </div>
+    <h1 class="text-3xl md:text-4xl font-bold text-stone-900 mb-4 leading-tight">
+      {article.data.title}
+    </h1>
+    {article.data.tags.length > 0 && (
+      <div class="flex flex-wrap gap-2">
+        {article.data.tags.map(tag => (
+          <span class="text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded">{tag}</span>
+        ))}
+      </div>
+    )}
+  </header>
+
+  <!-- Table of Contents -->
+  {headings.length > 1 && (
+    <nav class="bg-orange-50/50 border border-orange-100 rounded-xl p-6 mb-8">
+      <h2 class="text-sm font-bold text-stone-700 mb-3">📋 目录</h2>
+      <ul class="space-y-1 list-none pl-0">
+        {headings.map(heading => (
+          <li style={`padding-left: ${(heading.depth - 2) * 1}rem`}>
+            <a
+              href={`#${heading.slug}`}
+              class="text-sm text-stone-500 hover:text-orange-500 no-underline transition-colors"
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )}
+
+  <!-- Article Content -->
+  <div class="article-content">
+    <Content />
+  </div>
+
+  <!-- Subscribe CTA -->
+  <div class="mt-12">
+    <SubscribeCTA />
+  </div>
+
+  <!-- Related Articles -->
+  {relatedArticles.length > 0 && (
+    <div class="mt-12 border-t border-stone-100 pt-8">
+      <h2 class="text-lg font-bold text-stone-800 mb-4">📖 相关文章</h2>
+      <div class="grid gap-4 md:grid-cols-2">
+        {relatedArticles.map(ra => (
+          <a
+            href={`/${ra.data.category}/${ra.slug}`}
+            class="block bg-stone-50 rounded-xl p-5 hover:bg-orange-50 transition-colors no-underline border border-transparent hover:border-orange-100"
+          >
+            <h3 class="font-semibold text-stone-800 mb-1 text-sm">{ra.data.title}</h3>
+            <p class="text-xs text-stone-400">{ra.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+</article>
+
+</BaseLayout>

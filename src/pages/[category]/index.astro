@@ -1,0 +1,69 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const categories = ['programming', 'design', 'writing', 'marketing'];
+  return categories.map(cat => ({ params: { category: cat } }));
+}
+
+const { category } = Astro.params;
+
+const categoryMeta: Record<string, { title: string; description: string; icon: string }> = {
+  programming: { title: '编程开发', description: '远程接单、外包平台、独立开发、AI 编程工具', icon: '💻' },
+  design: { title: '设计创意', description: 'UI/UX、Canva、Figma、品牌设计、素材售卖', icon: '🎨' },
+  writing: { title: '写作内容', description: 'AI 写作、自媒体、内容代写、文案接单', icon: '✍️' },
+  marketing: { title: '营销增长', description: 'SEO、社交媒体、联盟营销、跨境电商', icon: '📈' },
+};
+
+const meta = categoryMeta[category!] || { title: category, description: '', icon: '📂' };
+const articles = await getCollection('articles');
+const categoryArticles = articles
+  .filter(a => a.data.category === category)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout title={`${meta.title} - 分类`} description={meta.description}>
+
+<section class="bg-orange-50 border-b border-orange-100">
+  <div class="max-w-3xl mx-auto px-4 py-12 text-center">
+    <div class="text-4xl mb-3">{meta.icon}</div>
+    <h1 class="text-2xl md:text-3xl font-bold text-orange-700 mb-2">{meta.title}</h1>
+    <p class="text-stone-500">{meta.description}</p>
+    <p class="text-sm text-stone-400 mt-4">共 {categoryArticles.length} 篇文章</p>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-4 py-8">
+  <a href="/" class="inline-block text-sm text-stone-400 hover:text-orange-500 mb-6 no-underline">&larr; 返回首页</a>
+
+  {categoryArticles.length === 0 ? (
+    <div class="text-center py-20 bg-stone-50 rounded-xl">
+      <div class="text-4xl mb-4">📭</div>
+      <p class="text-stone-400 text-lg">该分类暂无文章，敬请期待！</p>
+    </div>
+  ) : (
+    <div class="space-y-4">
+      {categoryArticles.map(article => (
+        <article class="bg-white border border-orange-50 rounded-lg p-5 hover:shadow-md hover:border-orange-200 transition-all">
+          <a href={`/${article.data.category}/${article.slug}`} class="no-underline">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs text-stone-400">
+                {article.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+              </span>
+              {article.data.readingTime && (
+                <span class="text-xs text-stone-400">· {article.data.readingTime} min 阅读</span>
+              )}
+            </div>
+            <h2 class="text-lg font-bold text-stone-800 mb-1 hover:text-orange-600 transition-colors">
+              {article.data.title}
+            </h2>
+            <p class="text-stone-500 text-sm">{article.data.description}</p>
+          </a>
+        </article>
+      ))}
+    </div>
+  )}
+</section>
+
+</BaseLayout>

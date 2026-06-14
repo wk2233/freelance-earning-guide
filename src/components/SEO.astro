@@ -1,0 +1,38 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: string;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/og-image.png',
+  ogType = 'website',
+} = Astro.props;
+
+const fullTitle = title.includes('自由赚钱指南')
+  ? title
+  : `${title} - 自由赚钱指南`;
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+
+<!-- Open Graph -->
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content="自由赚钱指南" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
+
+<!-- Canonical -->
+<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
