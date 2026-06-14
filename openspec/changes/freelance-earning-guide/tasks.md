@@ -53,5 +53,5 @@
 ## 8. 种子内容与部署
 
 - [x] 8.1 编写首页引导文章 1-2 篇（Markdown + frontmatter）
-- [ ] 8.2 配置 Vercel 部署（需要先运行 `vercel login` 完成认证）
-- [x] 8.3 验证本地结果（所有页面返回200、SEO标签正确、移动端适配正常）
+- [x] 8.2 配置部署（GitHub Pages + Actions 自动部署，URL: https://wk2233.github.io/freelance-earning-guide/）
+- [x] 8.3 验证部署结果（所有页面可访问、SEO 标签正确、移动端适配正常）
