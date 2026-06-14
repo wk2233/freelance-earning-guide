@@ -1,76 +1,76 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const toolCategories = [
+const tools = [
   {
-    title: '💼 接单平台', slug: 'freelance', gradient: 'from-blue-600 to-indigo-600',
-    tools: [
-      { name: 'Upwork', desc: '全球最大自由职业平台，覆盖各种技能领域', url: 'https://upwork.com' },
-      { name: 'Fiverr', desc: '服务起价 $5，适合新手起步接单', url: 'https://fiverr.com' },
-      { name: '程序员客栈', desc: '国内程序员远程接单平台', url: 'https://proginn.com' },
-      { name: '猪八戒网', desc: '国内综合设计/开发/营销服务平台', url: 'https://zbj.com' },
+    title:'💼 接单平台', gradient:'linear-gradient(135deg,#6c5ce7,#4834d4)',
+    items:[
+      { name:'Upwork', desc:'全球最大自由职业平台' },
+      { name:'Fiverr', desc:'新手友好，$5 起步' },
+      { name:'程序员客栈', desc:'国内程序员接单首选' },
+      { name:'猪八戒网', desc:'综合服务交易平台' },
     ],
   },
   {
-    title: '🎨 设计工具', slug: 'design', gradient: 'from-purple-600 to-pink-600',
-    tools: [
-      { name: 'Canva', desc: '零基础也能用的在线设计工具，模板丰富', url: 'https://canva.com' },
-      { name: 'Figma', desc: '专业 UI/UX 设计工具，免费版功能强大', url: 'https://figma.com' },
-      { name: 'Remove.bg', desc: 'AI 一键去背景，设计效率工具', url: 'https://remove.bg' },
+    title:'🎨 设计工具', gradient:'linear-gradient(135deg,#00cec9,#00b894)',
+    items:[
+      { name:'Canva', desc:'零基础在线设计' },
+      { name:'Figma', desc:'专业 UI/UX 设计' },
+      { name:'Remove.bg', desc:'AI 一键去背景' },
     ],
   },
   {
-    title: '✍️ 写作与内容', slug: 'writing', gradient: 'from-pink-600 to-rose-600',
-    tools: [
-      { name: 'Notion', desc: '全能写作、笔记、知识管理工具', url: 'https://notion.so' },
-      { name: 'Grammarly', desc: '英文写作语法检查与优化', url: 'https://grammarly.com' },
-      { name: 'Hemingway Editor', desc: '让文章更简洁易读的英文编辑器', url: 'https://hemingwayapp.com' },
+    title:'✍️ 写作内容', gradient:'linear-gradient(135deg,#fd79a8,#e84393)',
+    items:[
+      { name:'Notion', desc:'全能写作+知识管理' },
+      { name:'Grammarly', desc:'英文语法检查' },
+      { name:'Hemingway', desc:'让文章更简洁' },
     ],
   },
   {
-    title: '⚡ 效率工具', slug: 'productivity', gradient: 'from-emerald-600 to-teal-600',
-    tools: [
-      { name: 'Trello', desc: '项目管理看板，管理自由职业项目', url: 'https://trello.com' },
-      { name: 'Toggl', desc: '时间追踪工具，按项目/客户计时', url: 'https://toggl.com' },
-      { name: 'Calendly', desc: '日程预约，让客户轻松约你', url: 'https://calendly.com' },
+    title:'⚡ 效率工具', gradient:'linear-gradient(135deg,#00b894,#00cec9)',
+    items:[
+      { name:'Trello', desc:'项目管理看板' },
+      { name:'Toggl', desc:'时间追踪计时' },
+      { name:'Calendly', desc:'日程预约工具' },
     ],
   },
 ];
 ---
 
-<BaseLayout title="工具推荐" description="自由职业者必备的接单平台、设计工具、写作工具和效率工具">
+<BaseLayout title="工具推荐" description="自由职业者必备的接单平台、设计工具、写作工具和效率工具推荐">
 
-<section class="max-w-4xl mx-auto px-6 py-12">
-  <div class="text-center mb-16 reveal">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">🛠️ 工具推荐</h1>
-    <p class="text-lg text-slate-500">精选自由职业者必备工具，提高效率多赚钱</p>
-    <p class="text-xs text-slate-400 mt-4 bg-amber-50 border border-amber-200 py-2 px-4 rounded-full inline-block">ℹ️ 部分链接可能含联盟推广，不影响推荐质量</p>
-  </div>
+<div style="padding:100px 24px 80px">
+  <div class="container" style="max-width:780px">
 
-  <div class="space-y-8">
-    {toolCategories.map((cat, i) => (
-      <section class={`reveal reveal-delay-${Math.min(i, 4)} bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden`}>
-        <div class={`bg-gradient-to-r ${cat.gradient} px-6 py-4`}>
-          <h2 class="text-lg font-bold text-white">{cat.title}</h2>
+    <div style="text-align:center;margin-bottom:56px" class="reveal">
+      <span class="section-label">Resources</span>
+      <h1>🛠️ 工具推荐</h1>
+      <p style="color:var(--c-text-secondary);font-size:1.1rem;margin-top:16px">精选自由职业者必备工具，提高效率多赚钱</p>
+      <div style="display:inline-block;margin-top:20px;padding:8px 20px;background:#fff3cd;border-radius:99px;font-size:.8rem;color:#856404">
+        ℹ️ 部分链接可能含联盟推广
+      </div>
+    </div>
+
+    {tools.map((cat, i) => (
+      <div class={`tool-section reveal reveal-d${Math.min(i+1, 5)}`}>
+        <div class="tool-section-head" style={`background:${cat.gradient}`}>{cat.title}</div>
+        <div class="tool-grid">
+          {cat.items.map(t => (
+            <div class="tool-item">
+              <h4>{t.name}</h4>
+              <p>{t.desc}</p>
+            </div>
+          ))}
         </div>
-        <div class="p-6">
-          <div class="grid md:grid-cols-2 gap-3">
-            {cat.tools.map(tool => (
-              <a href={tool.url} target="_blank" rel="noopener noreferrer"
-                 class="card-hover block bg-slate-50 rounded-xl p-4 no-underline group border border-transparent">
-                <h3 class="font-semibold text-slate-800 text-sm mb-1 group-hover:text-blue-600 transition-colors">{tool.name}</h3>
-                <p class="text-xs text-slate-500">{tool.desc}</p>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
+      </div>
     ))}
-  </div>
 
-  <div class="text-center mt-12 reveal">
-    <a href="/freelance-earning-guide/" class="text-slate-400 hover:text-blue-600 text-sm no-underline transition-colors">← 返回首页</a>
+    <div class="reveal" style="text-align:center;margin-top:48px">
+      <a href="/freelance-earning-guide/" class="back-link">← 返回首页</a>
+    </div>
+
   </div>
-</section>
+</div>
 
 </BaseLayout>

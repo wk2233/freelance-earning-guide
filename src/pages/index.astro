@@ -3,174 +3,140 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const articles = await getCollection('articles');
-const sortedArticles = articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const sorted = articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-const categories = [
-  { slug: 'programming', label: '编程开发', icon: '💻', color: 'blue' },
-  { slug: 'design', label: '设计创意', icon: '🎨', color: 'purple' },
-  { slug: 'writing', label: '写作内容', icon: '✍️', color: 'pink' },
-  { slug: 'marketing', label: '营销增长', icon: '📈', color: 'green' },
-];
-
-const tagColors: Record<string, string> = {
-  programming: 'tag-blue',
-  design: 'tag-purple',
-  writing: 'tag-pink',
-  marketing: 'tag-green',
+const tagClass: Record<string, string> = {
+  programming: 'tag-prog',
+  design: 'tag-design',
+  writing: 'tag-writing',
+  marketing: 'tag-mkt',
+};
+const catLabel: Record<string, string> = {
+  programming: '编程开发',
+  design: '设计创意',
+  writing: '写作内容',
+  marketing: '营销增长',
 };
 ---
 
 <BaseLayout title="不上班，也能自由赚钱" description="系统化指导数字技能自由职业赚钱。覆盖编程、设计、写作、营销 — 从零基础到高手进阶。">
 
-<!-- Hero Section -->
-<section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white">
-  <!-- Animated bg mesh -->
-  <div class="absolute inset-0 opacity-20">
-    <div class="absolute top-10 left-10 w-72 h-72 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
-    <div class="absolute bottom-10 right-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl animate-pulse" style="animation-delay:1s"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-500 rounded-full blur-3xl animate-pulse" style="animation-delay:2s"></div>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <div class="hero-particles"></div>
   </div>
 
-  <div class="relative max-w-4xl mx-auto px-6 py-24 md:py-32 text-center">
-    <div class="animate-fade">
-      <span class="inline-block tag tag-blue bg-white/10 text-blue-200 mb-6">🚀 从零到自由 · 系统化路径</span>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span> 从零到自由 · 系统化路径
     </div>
-
-    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 animate-in leading-tight">
-      不上班，也能
-      <span class="gradient-text">自由赚钱</span>
-    </h1>
-
-    <p class="text-lg md:text-xl text-blue-100/80 mb-10 max-w-2xl mx-auto animate-in reveal-delay-1 leading-relaxed">
-      系统掌握编程、设计、写作、营销四大数字技能<br class="hidden sm:block"/>
-      从零基础到高手进阶，实现时间和地点的真正自由
-    </p>
-
-    <div class="flex flex-col sm:flex-row gap-4 justify-center animate-in reveal-delay-2">
-      <a href="/freelance-earning-guide/programming/" class="btn-primary text-base px-8 py-3.5 rounded-xl shadow-xl shadow-blue-600/30">
-        开始学习 →
-      </a>
-      <a href="/freelance-earning-guide/about/" class="btn-secondary text-base px-8 py-3.5 rounded-xl border-white/20 text-white hover:bg-white/10">
-        了解更多
-      </a>
+    <h1>不上班，也能<br/><span class="gradient">自由赚钱</span></h1>
+    <p>系统掌握编程、设计、写作、营销四大数字技能。从零基础到高手进阶，实现时间和地点的真正自由。</p>
+    <div class="hero-actions">
+      <a href="/freelance-earning-guide/programming/" class="btn btn-primary">🚀 开始自由之路</a>
+      <a href="/freelance-earning-guide/about/" class="btn btn-outline">了解更多</a>
     </div>
-
-    <!-- Stats -->
-    <div class="grid grid-cols-3 gap-8 mt-16 max-w-lg mx-auto animate-in reveal-delay-3">
-      <div>
-        <div class="text-2xl md:text-3xl font-bold text-white">4</div>
-        <div class="text-xs text-blue-200/60 mt-1">技能分类</div>
-      </div>
-      <div>
-        <div class="text-2xl md:text-3xl font-bold text-white">{articles.length}</div>
-        <div class="text-xs text-blue-200/60 mt-1">深度文章</div>
-      </div>
-      <div>
-        <div class="text-2xl md:text-3xl font-bold text-white">∞</div>
-        <div class="text-xs text-blue-200/60 mt-1">赚钱可能</div>
-      </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">4</div><div class="hero-stat-label">技能分类</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">{articles.length}</div><div class="hero-stat-label">深度文章</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">∞</div><div class="hero-stat-label">赚钱可能</div></div>
     </div>
-  </div>
-
-  <!-- Wave divider -->
-  <div class="absolute bottom-0 left-0 right-0">
-    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 60V30C240 0 480 0 720 30C960 60 1200 60 1440 30V60H0Z" fill="white"/>
-    </svg>
   </div>
 </section>
 
-<!-- Category Grid -->
-<section class="max-w-6xl mx-auto px-6 -mt-8 relative z-10">
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    {categories.map((cat, i) => (
-      <a href={`/freelance-earning-guide/${cat.slug}/`} class={`reveal reveal-delay-${i} card-hover bg-white rounded-2xl p-6 shadow-sm border border-slate-100 no-underline group`}>
-        <div class="text-3xl mb-3 group-hover:scale-110 transition-transform inline-block">{cat.icon}</div>
-        <h3 class="font-semibold text-slate-800 text-sm mb-1 group-hover:text-blue-600 transition-colors">{cat.label}</h3>
-        <p class="text-xs text-slate-400">
-          {cat.slug === 'programming' ? '远程 · 外包 · SaaS' :
-           cat.slug === 'design' ? 'UI/UX · Figma · 品牌' :
-           cat.slug === 'writing' ? 'AI写作 · 自媒体' :
-           'SEO · 联盟 · 电商'}
-        </p>
+<!-- Categories -->
+<section style="padding:80px 24px">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px" class="reveal">
+      <span class="section-label">核心领域</span>
+      <h2>选择你的自由之路</h2>
+      <p style="color:var(--c-text-secondary);font-size:1.05rem">四大数字技能，总有一条适合你</p>
+    </div>
+    <div class="cat-grid">
+      <a href="/freelance-earning-guide/programming/" class="cat-card reveal reveal-d1">
+        <span class="cat-card-icon">💻</span>
+        <h3>编程开发</h3>
+        <p>远程接单 · 外包平台 · SaaS</p>
       </a>
-    ))}
+      <a href="/freelance-earning-guide/design/" class="cat-card reveal reveal-d2">
+        <span class="cat-card-icon">🎨</span>
+        <h3>设计创意</h3>
+        <p>UI/UX · Figma · 品牌设计</p>
+      </a>
+      <a href="/freelance-earning-guide/writing/" class="cat-card reveal reveal-d3">
+        <span class="cat-card-icon">✍️</span>
+        <h3>写作内容</h3>
+        <p>AI 写作 · 自媒体 · 接单</p>
+      </a>
+      <a href="/freelance-earning-guide/marketing/" class="cat-card reveal reveal-d4">
+        <span class="cat-card-icon">📈</span>
+        <h3>营销增长</h3>
+        <p>SEO · 联盟营销 · 电商</p>
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- Article List -->
-<section class="max-w-4xl mx-auto px-6 py-16">
-  <div class="reveal mb-10">
-    <h2 class="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">📝 最新文章</h2>
-    <p class="text-slate-500 mt-2">系统化的自由职业赚钱指南，每篇都是干货</p>
-  </div>
-
-  {sortedArticles.length === 0 ? (
-    <div class="reveal text-center py-20 bg-slate-50 rounded-2xl border border-slate-100">
-      <div class="text-5xl mb-4">📝</div>
-      <p class="text-slate-400 text-lg">文章正在撰写中，敬请期待！</p>
+<section style="padding:0 24px 80px">
+  <div class="container" style="max-width:900px">
+    <div style="margin-bottom:48px" class="reveal">
+      <span class="section-label">最新文章</span>
+      <h2>📝 系统化赚钱指南</h2>
+      <p style="color:var(--c-text-secondary);font-size:1.05rem">每篇都是干货，可复制的自由职业路径</p>
     </div>
-  ) : (
-    <div class="grid gap-6">
-      {sortedArticles.map((article, i) => {
-        const cat = categories.find(c => c.slug === article.data.category);
-        return (
-          <article class={`reveal reveal-delay-${Math.min(i, 4)} card-hover bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm`}>
-            <a href={`/freelance-earning-guide/${article.data.category}/${article.slug}/`} class="block p-6 md:p-8 no-underline">
-              <div class="flex flex-wrap items-center gap-3 mb-3">
-                <span class={`tag ${tagColors[article.data.category] || 'tag-blue'}`}>
-                  {cat?.icon} {cat?.label}
-                </span>
-                <span class="text-xs text-slate-400">
-                  {article.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' })}
-                </span>
-                {article.data.readingTime && (
-                  <span class="text-xs text-slate-400">{article.data.readingTime} min 阅读</span>
-                )}
-              </div>
-              <h2 class="text-xl md:text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors tracking-tight">
-                {article.data.title}
-              </h2>
-              <p class="text-slate-500 leading-relaxed">{article.data.description}</p>
 
-              {article.data.tags.length > 0 && (
-                <div class="flex flex-wrap gap-2 mt-4">
-                  {article.data.tags.map(tag => (
-                    <span class="text-xs bg-slate-100 text-slate-500 px-2.5 py-1 rounded-full font-medium">{tag}</span>
-                  ))}
+    {sorted.length === 0 ? (
+      <div class="reveal" style="text-align:center;padding:80px 0;background:var(--c-surface);border-radius:var(--radius-lg)">
+        <div style="font-size:3rem;margin-bottom:16px">📝</div>
+        <p style="color:var(--c-text-muted);font-size:1.1rem">文章正在撰写中，敬请期待！</p>
+      </div>
+    ) : (
+      <div class="article-list">
+        {sorted.map((a, i) => (
+          <article class={`article-card reveal reveal-d${Math.min(i+1, 5)}`}>
+            <a href={`/freelance-earning-guide/${a.data.category}/${a.slug}/`}>
+              <div class="article-card-meta">
+                <span class={`article-card-tag ${tagClass[a.data.category] || 'tag-prog'}`}>
+                  {catLabel[a.data.category]}
+                </span>
+                <span class="article-card-date">
+                  {a.data.date.toLocaleDateString('zh-CN', { year:'numeric', month:'2-digit', day:'2-digit' })}
+                </span>
+                {a.data.readingTime && <span class="article-card-date">{a.data.readingTime} min</span>}
+              </div>
+              <h2>{a.data.title}</h2>
+              <p>{a.data.description}</p>
+              {a.data.tags.length > 0 && (
+                <div class="article-card-tags">
+                  {a.data.tags.map(t => <span>{t}</span>)}
                 </div>
               )}
             </a>
           </article>
-        );
-      })}
-    </div>
-  )}
+        ))}
+      </div>
+    )}
+  </div>
 </section>
 
-<!-- Newsletter CTA -->
-<section class="max-w-4xl mx-auto px-6 pb-20 reveal">
-  <div class="relative overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-10 md:p-14 text-center text-white shadow-2xl shadow-blue-600/20">
-    <div class="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-    <div class="absolute bottom-0 left-0 w-28 h-28 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
-
-    <div class="relative">
-      <h3 class="text-2xl md:text-3xl font-bold mb-4">📬 订阅每周自由职业攻略</h3>
-      <p class="text-blue-100 mb-8 max-w-md mx-auto">
-        免费获取最新自由职业机会、实操指南和工具推荐
-      </p>
-      <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-        <input
-          type="email"
-          placeholder="输入你的邮箱"
-          class="flex-1 px-5 py-3.5 rounded-xl border-2 border-white/20 bg-white/10 text-white placeholder:text-blue-200 text-sm focus:outline-none focus:border-white/40 focus:bg-white/15 transition-all"
-          required
-        />
-        <button type="submit" class="px-6 py-3.5 bg-white text-blue-700 font-semibold rounded-xl hover:bg-blue-50 transition-colors text-sm whitespace-nowrap shadow-lg">
-          🚀 免费订阅
-        </button>
-      </form>
-      <p class="text-xs text-blue-200/60 mt-4">不发送垃圾邮件，随时可取消订阅</p>
+<!-- CTA -->
+<section style="padding:0 24px 100px">
+  <div class="container reveal" style="max-width:800px">
+    <div class="cta">
+      <div class="cta-inner">
+        <h2>📬 订阅每周自由职业攻略</h2>
+        <p>免费获取最新自由职业机会、实操指南和工具推荐</p>
+        <form class="cta-form">
+          <input type="email" class="cta-input" placeholder="输入你的邮箱" required />
+          <button type="submit" class="cta-btn">🚀 免费订阅</button>
+        </form>
+        <p style="font-size:.8rem;opacity:.5;margin-top:16px">不发送垃圾邮件 · 随时可取消</p>
+      </div>
     </div>
   </div>
 </section>

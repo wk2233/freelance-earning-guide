@@ -7,65 +7,65 @@ export async function getStaticPaths() {
 }
 
 const { category } = Astro.params;
-
-const categoryMeta: Record<string, { title: string; description: string; icon: string; color: string; gradient: string }> = {
-  programming: { title: '编程开发', description: '远程接单、外包平台、独立开发、AI 编程工具', icon: '💻', color: 'tag-blue', gradient: 'from-blue-600 to-indigo-700' },
-  design: { title: '设计创意', description: 'UI/UX、Canva、Figma、品牌设计、素材售卖', icon: '🎨', color: 'tag-purple', gradient: 'from-purple-600 to-pink-600' },
-  writing: { title: '写作内容', description: 'AI 写作、自媒体、内容代写、文案接单', icon: '✍️', color: 'tag-pink', gradient: 'from-pink-600 to-rose-600' },
-  marketing: { title: '营销增长', description: 'SEO、社交媒体、联盟营销、跨境电商', icon: '📈', color: 'tag-green', gradient: 'from-emerald-600 to-teal-600' },
+const meta: Record<string, { title:string;desc:string;icon:string;gradient:string }> = {
+  programming: { title:'编程开发', desc:'远程接单、外包平台、独立开发、AI 编程工具', icon:'💻', gradient:'linear-gradient(135deg,#6c5ce7,#4834d4)' },
+  design: { title:'设计创意', desc:'UI/UX、Canva、Figma、品牌设计、素材售卖', icon:'🎨', gradient:'linear-gradient(135deg,#00cec9,#00b894)' },
+  writing: { title:'写作内容', desc:'AI 写作、自媒体、内容代写、文案接单', icon:'✍️', gradient:'linear-gradient(135deg,#fd79a8,#e84393)' },
+  marketing: { title:'营销增长', desc:'SEO、社交媒体、联盟营销、跨境电商', icon:'📈', gradient:'linear-gradient(135deg,#00b894,#00cec9)' },
 };
+const m = meta[category!] || { title:category, desc:'', icon:'📂', gradient:'linear-gradient(135deg,#6c5ce7,#4834d4)' };
 
-const meta = categoryMeta[category!] || { title: category, description: '', icon: '📂', color: 'tag-blue', gradient: 'from-slate-600 to-slate-700' };
 const articles = await getCollection('articles');
-const categoryArticles = articles
-  .filter(a => a.data.category === category)
+const catArticles = articles.filter(a => a.data.category === category)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const tagClass: Record<string, string> = {
+  programming: 'tag-prog', design: 'tag-design', writing: 'tag-writing', marketing: 'tag-mkt',
+};
+const catLabel: Record<string, string> = {
+  programming: '编程开发', design: '设计创意', writing: '写作内容', marketing: '营销增长',
+};
 ---
 
-<BaseLayout title={`${meta.title} - 分类`} description={meta.description}>
+<BaseLayout title={`${m.title} - 分类`} description={m.desc}>
 
-<!-- Category Hero -->
-<section class={`bg-gradient-to-br ${meta.gradient} text-white`}>
-  <div class="max-w-4xl mx-auto px-6 py-16 md:py-20 text-center">
-    <div class="text-5xl mb-4 animate-in">{meta.icon}</div>
-    <h1 class="text-3xl md:text-4xl font-extrabold mb-3 tracking-tight animate-in">{meta.title}</h1>
-    <p class="text-lg opacity-80 animate-in reveal-delay-1">{meta.description}</p>
-    <p class="text-sm opacity-60 mt-4 animate-in reveal-delay-2">共 {categoryArticles.length} 篇文章</p>
+<section class="page-hero">
+  <div class="page-hero-bg" style={`background:${m.gradient}`}></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-icon">{m.icon}</div>
+    <h1>{m.title}</h1>
+    <p>{m.desc}</p>
+    <p style="opacity:.6;font-size:.9rem;margin-top:12px">共 {catArticles.length} 篇文章</p>
   </div>
 </section>
 
-<!-- Article List -->
-<section class="max-w-4xl mx-auto px-6 py-12">
-  <a href="/freelance-earning-guide/" class="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-blue-600 mb-8 no-underline transition-colors">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    返回首页
-  </a>
+<div style="padding:40px 24px 80px">
+  <div class="container" style="max-width:900px">
+    <a href="/freelance-earning-guide/" class="back-link">← 返回首页</a>
 
-  {categoryArticles.length === 0 ? (
-    <div class="reveal text-center py-20 bg-slate-50 rounded-2xl border border-slate-100">
-      <div class="text-5xl mb-4">📭</div>
-      <p class="text-slate-400 text-lg">该分类暂无文章，敬请期待！</p>
-    </div>
-  ) : (
-    <div class="grid gap-6">
-      {categoryArticles.map((article, i) => (
-        <article class={`reveal reveal-delay-${Math.min(i, 4)} card-hover bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm`}>
-          <a href={`/freelance-earning-guide/${article.data.category}/${article.slug}/`} class="block p-6 md:p-8 no-underline">
-            <div class="flex items-center gap-3 mb-3">
-              <span class="text-xs text-slate-400">
-                {article.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' })}
-              </span>
-              {article.data.readingTime && (
-                <span class="text-xs text-slate-400">· {article.data.readingTime} min 阅读</span>
-              )}
-            </div>
-            <h2 class="text-xl font-bold text-slate-900 mb-2 hover:text-blue-600 transition-colors tracking-tight">{article.data.title}</h2>
-            <p class="text-slate-500 text-sm">{article.data.description}</p>
-          </a>
-        </article>
-      ))}
-    </div>
-  )}
-</section>
+    {catArticles.length === 0 ? (
+      <div class="reveal" style="text-align:center;padding:80px 0;background:var(--c-surface);border-radius:var(--radius-lg)">
+        <div style="font-size:3rem;margin-bottom:16px">📭</div>
+        <p style="color:var(--c-text-muted);font-size:1.1rem">该分类暂无文章，敬请期待！</p>
+      </div>
+    ) : (
+      <div class="article-list">
+        {catArticles.map((a, i) => (
+          <article class={`article-card reveal reveal-d${Math.min(i+1, 5)}`}>
+            <a href={`/freelance-earning-guide/${a.data.category}/${a.slug}/`}>
+              <div class="article-card-meta">
+                <span class={`article-card-tag ${tagClass[a.data.category] || 'tag-prog'}`}>{catLabel[a.data.category]}</span>
+                <span class="article-card-date">{a.data.date.toLocaleDateString('zh-CN', { year:'numeric', month:'2-digit', day:'2-digit' })}</span>
+                {a.data.readingTime && <span class="article-card-date">· {a.data.readingTime} min</span>}
+              </div>
+              <h2>{a.data.title}</h2>
+              <p>{a.data.description}</p>
+            </a>
+          </article>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
 
 </BaseLayout>

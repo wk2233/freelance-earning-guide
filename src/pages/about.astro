@@ -4,55 +4,55 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="关于我们" description="了解自由赚钱指南的使命和背后的故事">
 
-<section class="max-w-4xl mx-auto px-6 py-12">
-  <div class="text-center mb-16 reveal">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">关于<span class="gradient-text">自由赚钱指南</span></h1>
-    <p class="text-lg text-slate-500">帮助 10,000 人实现不上班也能自由赚钱</p>
-  </div>
+<div style="padding:100px 24px 80px">
+  <div class="container" style="max-width:780px">
 
-  <div class="space-y-8 max-w-2xl mx-auto">
-    <div class="reveal bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
-      <h2 class="text-xl font-bold text-slate-800 mb-3">🎯 我们的使命</h2>
-      <p class="text-slate-600 leading-relaxed">
-        自由赚钱指南致力于系统化地指导每一个人掌握数字技能，通过自由职业实现收入自由。
-        无论你是零基础的职场新人，还是有技能但不知道如何变现的专业人士，这里都有适合你的内容。
-      </p>
+    <div style="text-align:center;margin-bottom:64px" class="reveal">
+      <span class="section-label">About</span>
+      <h1>关于<span class="gradient" style="display:inline-block">自由赚钱指南</span></h1>
+      <p style="color:var(--c-text-secondary);font-size:1.1rem;margin-top:16px">帮助 10,000 人实现不上班也能自由赚钱</p>
     </div>
 
-    <div class="reveal reveal-delay-1 bg-white rounded-2xl p-8 border border-slate-100 shadow-sm">
-      <h2 class="text-xl font-bold text-slate-800 mb-4">📚 四大领域</h2>
-      <div class="grid gap-4">
-        {[
-          { icon: '💻', title: '编程开发', desc: '远程接单、外包平台、SaaS 独立开发、AI 编程工具' },
-          { icon: '🎨', title: '设计创意', desc: 'UI/UX 设计、Canva/Figma、品牌设计、设计接单' },
-          { icon: '✍️', title: '写作内容', desc: 'AI 写作、自媒体运营、内容代写、文案接单' },
-          { icon: '📈', title: '营销增长', desc: 'SEO、社交媒体营销、联盟营销、数字产品销售' },
-        ].map(item => (
-          <div class="flex items-start gap-4 p-3 -mx-3 rounded-xl hover:bg-slate-50 transition-colors">
-            <span class="text-2xl">{item.icon}</span>
-            <div>
-              <div class="font-semibold text-slate-800 text-sm">{item.title}</div>
-              <div class="text-xs text-slate-500 mt-0.5">{item.desc}</div>
+    <div style="display:grid;gap:24px">
+      <div class="reveal" style="background:var(--c-surface);border-radius:var(--radius-lg);padding:40px;border:1px solid var(--c-border)">
+        <h3 style="margin-bottom:12px">🎯 我们的使命</h3>
+        <p style="color:var(--c-text-secondary);line-height:1.8">
+          自由赚钱指南致力于系统化地指导每一个人掌握数字技能，通过自由职业实现收入自由。
+          无论你是零基础的职场新人，还是有技能但不知道如何变现的专业人士，这里都有适合你的内容。
+        </p>
+      </div>
+
+      <div class="reveal reveal-d1" style="background:var(--c-bg);border-radius:var(--radius-lg);padding:40px;border:1px solid var(--c-border)">
+        <h3 style="margin-bottom:16px">📚 四大领域</h3>
+        <div style="display:grid;gap:16px">
+          {[
+            { icon:'💻', title:'编程开发', desc:'远程接单、外包平台、SaaS 独立开发、AI 编程工具' },
+            { icon:'🎨', title:'设计创意', desc:'UI/UX 设计、Canva/Figma、品牌设计、设计接单' },
+            { icon:'✍️', title:'写作内容', desc:'AI 写作、自媒体运营、内容代写、文案接单' },
+            { icon:'📈', title:'营销增长', desc:'SEO、社交媒体营销、联盟营销、数字产品销售' },
+          ].map(i => (
+            <div style="display:flex;align-items:flex-start;gap:16px;padding:8px 0">
+              <span style="font-size:1.5rem">{i.icon}</span>
+              <div><strong style="font-size:.95rem">{i.title}</strong><br/><span style="font-size:.85rem;color:var(--c-text-muted)">{i.desc}</span></div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:var(--radius-lg);padding:40px;color:#fff">
+        <h3 style="color:#fff;margin-bottom:12px">👋 关于站长</h3>
+        <p style="color:rgba(255,255,255,.7);line-height:1.8">
+          一个不想上班的程序员，相信数字技能可以让人摆脱朝九晚五的束缚。
+          创建这个网站的目的是分享自由职业赚钱的路线图、工具和真实案例，帮助你少走弯路。
+        </p>
+      </div>
+
+      <div class="reveal reveal-d3" style="text-align:center;padding:40px 0">
+        <a href="/freelance-earning-guide/" class="btn btn-primary">🚀 开始自由之路</a>
       </div>
     </div>
 
-    <div class="reveal reveal-delay-2 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 text-white">
-      <h2 class="text-xl font-bold mb-3">👋 关于站长</h2>
-      <p class="text-slate-300 leading-relaxed">
-        一个不想上班的程序员，相信数字技能可以让人摆脱朝九晚五的束缚。
-        创建这个网站的目的是分享自由职业赚钱的路线图、工具和真实案例，帮助你少走弯路。
-      </p>
-    </div>
-
-    <div class="reveal reveal-delay-3 text-center py-10">
-      <a href="/freelance-earning-guide/" class="btn-primary text-base px-10 py-4 rounded-xl">
-        开始自由之路 →
-      </a>
-    </div>
   </div>
-</section>
+</div>
 
 </BaseLayout>

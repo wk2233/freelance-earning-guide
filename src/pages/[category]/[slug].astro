@@ -14,108 +14,95 @@ const { article } = Astro.props;
 const { Content, headings } = await article.render();
 
 const allArticles = await getCollection('articles');
-const relatedArticles = allArticles
+const related = allArticles
   .filter(a => a.data.category === article.data.category && a.slug !== article.slug)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
 
-const categoryMeta: Record<string, { label: string; icon: string; color: string }> = {
-  programming: { label: '编程开发', icon: '💻', color: 'tag-blue' },
-  design: { label: '设计创意', icon: '🎨', color: 'tag-purple' },
-  writing: { label: '写作内容', icon: '✍️', color: 'tag-pink' },
-  marketing: { label: '营销增长', icon: '📈', color: 'tag-green' },
+const catLabel: Record<string, string> = {
+  programming: '编程开发', design: '设计创意', writing: '写作内容', marketing: '营销增长',
 };
-
-const cat = categoryMeta[article.data.category] || { label: article.data.category, icon: '📂', color: 'tag-blue' };
+const tagClass: Record<string, string> = {
+  programming: 'tag-prog', design: 'tag-design', writing: 'tag-writing', marketing: 'tag-mkt',
+};
 ---
 
 <BaseLayout title={article.data.title} description={article.data.description} ogType="article">
 
-<article class="max-w-4xl mx-auto px-6 py-10">
-  <!-- Breadcrumb -->
-  <nav class="text-sm text-slate-400 mb-8 flex items-center gap-2">
-    <a href="/freelance-earning-guide/" class="hover:text-blue-600 no-underline transition-colors">首页</a>
-    <span>/</span>
-    <a href={`/freelance-earning-guide/${article.data.category}/`} class="hover:text-blue-600 no-underline transition-colors">{cat.icon} {cat.label}</a>
-  </nav>
-
-  <!-- Article Header -->
-  <header class="mb-10 reveal">
-    <div class="flex flex-wrap items-center gap-3 mb-5">
-      <span class={`tag ${cat.color}`}>{cat.icon} {cat.label}</span>
-      <span class="text-sm text-slate-400">
-        {article.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
-      </span>
-      {article.data.readingTime && (
-        <span class="text-sm text-slate-400">· {article.data.readingTime} min 阅读</span>
-      )}
+<div style="padding:80px 24px">
+  <div class="article">
+    <!-- Breadcrumb -->
+    <div class="article-breadcrumb">
+      <a href="/freelance-earning-guide/">首页</a><span>/</span>
+      <a href={`/freelance-earning-guide/${article.data.category}/`}>{catLabel[article.data.category]}</a>
     </div>
-    <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">
-      {article.data.title}
-    </h1>
-    {article.data.tags.length > 0 && (
-      <div class="flex flex-wrap gap-2">
-        {article.data.tags.map(tag => (
-          <span class="text-xs bg-slate-100 text-slate-500 px-3 py-1.5 rounded-full font-medium">{tag}</span>
+
+    <!-- Header -->
+    <header class="article-header reveal">
+      <div class="article-card-meta" style="margin-bottom:16px">
+        <span class={`article-card-tag ${tagClass[article.data.category] || 'tag-prog'}`}>
+          {catLabel[article.data.category]}
+        </span>
+        <span class="article-card-date">
+          {article.data.date.toLocaleDateString('zh-CN', { year:'numeric', month:'long', day:'numeric' })}
+        </span>
+        {article.data.readingTime && <span class="article-card-date">· {article.data.readingTime} min</span>}
+      </div>
+      <h1>{article.data.title}</h1>
+      {article.data.tags.length > 0 && (
+        <div class="article-card-tags">
+          {article.data.tags.map(t => <span>{t}</span>)}
+        </div>
+      )}
+    </header>
+
+    <!-- TOC -->
+    {headings.length > 1 && (
+      <nav class="toc reveal">
+        <h4>📋 目录</h4>
+        {headings.map(h => (
+          <a href={`#${h.slug}`} style={`padding-left:${(h.depth - 1) * 16}px`}>{h.text}</a>
         ))}
+      </nav>
+    )}
+
+    <!-- Content -->
+    <div class="article-body reveal">
+      <Content />
+    </div>
+
+    <!-- CTA -->
+    <div class="reveal" style="margin-top:64px">
+      <div class="cta">
+        <div class="cta-inner">
+          <h2>📬 觉得有用？订阅更多</h2>
+          <p>每周发送自由职业赚钱攻略到你的邮箱</p>
+          <form class="cta-form">
+            <input type="email" class="cta-input" placeholder="输入邮箱" required />
+            <button type="submit" class="cta-btn">订阅</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related -->
+    {related.length > 0 && (
+      <div class="reveal" style="margin-top:64px">
+        <h3 style="margin-bottom:24px">📖 相关文章</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+          {related.map(ra => (
+            <a href={`/freelance-earning-guide/${ra.data.category}/${ra.slug}/`}
+               style="display:block;padding:24px;background:var(--c-surface);border-radius:var(--radius);transition:var(--transition);border:1px solid transparent"
+               onmouseover="this.style.borderColor='var(--c-border)'"
+               onmouseout="this.style.borderColor='transparent'">
+              <span class={`article-card-tag ${tagClass[ra.data.category] || 'tag-prog'}`} style="margin-bottom:8px;display:inline-block">{catLabel[ra.data.category]}</span>
+              <h4 style="font-size:.95rem;font-weight:600;line-height:1.4">{ra.data.title}</h4>
+            </a>
+          ))}
+        </div>
       </div>
     )}
-  </header>
-
-  <!-- Table of Contents -->
-  {headings.length > 1 && (
-    <nav class="reveal bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 md:p-8 mb-10 border border-blue-100">
-      <h2 class="text-sm font-bold text-slate-700 mb-4 uppercase tracking-wider">📋 目录</h2>
-      <ul class="space-y-1 list-none pl-0">
-        {headings.map(heading => (
-          <li style={`padding-left: ${(heading.depth - 2) * 1.25}rem`}>
-            <a
-              href={`#${heading.slug}`}
-              class="block py-1 text-sm text-slate-500 hover:text-blue-600 no-underline transition-colors"
-            >
-              {heading.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  )}
-
-  <!-- Article Body -->
-  <div class="article-content reveal">
-    <Content />
   </div>
-
-  <!-- Subscribe -->
-  <div class="reveal mt-16">
-    <div class="relative overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-8 md:p-10 text-center text-white">
-      <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-      <div class="relative">
-        <h3 class="text-xl font-bold mb-2">📬 觉得有用？订阅更多</h3>
-        <p class="text-blue-100 text-sm mb-6">每周发送自由职业赚钱攻略到你的邮箱</p>
-        <form class="flex flex-col sm:flex-row gap-3 max-w-sm mx-auto">
-          <input type="email" placeholder="输入邮箱" class="flex-1 px-4 py-3 rounded-xl border-2 border-white/20 bg-white/10 text-white placeholder:text-blue-200 text-sm focus:outline-none focus:border-white/40 transition-all" required />
-          <button type="submit" class="px-5 py-3 bg-white text-blue-700 font-semibold rounded-xl hover:bg-blue-50 transition-colors text-sm whitespace-nowrap">订阅</button>
-        </form>
-        <p class="text-xs text-blue-200/50 mt-3">不发送垃圾邮件 · 随时取消</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Related Articles -->
-  {relatedArticles.length > 0 && (
-    <div class="reveal mt-16 border-t border-slate-100 pt-12">
-      <h2 class="text-2xl font-bold text-slate-900 mb-6">📖 相关文章</h2>
-      <div class="grid md:grid-cols-2 gap-5">
-        {relatedArticles.map(ra => (
-          <a href={`/freelance-earning-guide/${ra.data.category}/${ra.slug}/`} class="card-hover block bg-slate-50 rounded-xl p-6 no-underline group border border-transparent">
-            <span class={`tag ${cat.color} mb-3 inline-block`}>{cat.icon} {cat.label}</span>
-            <h3 class="font-semibold text-slate-800 group-hover:text-blue-600 transition-colors text-sm leading-snug">{ra.data.title}</h3>
-          </a>
-        ))}
-      </div>
-    </div>
-  )}
-</article>
+</div>
 
 </BaseLayout>
