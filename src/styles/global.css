@@ -194,10 +194,11 @@ h3{font-size:clamp(1.1rem,2vw,1.5rem);font-weight:700}
    HERO
    ============================================================ */
 .hero {
-  position:relative;min-height:100vh;display:flex;align-items:center;
+  position:relative;min-height:calc(100vh - 64px);display:flex;align-items:center;
   justify-content:center;overflow:hidden;
   background:var(--c-bg);
   padding:100px 24px 80px;
+  margin-top:0;
 }
 .hero-bg {
   position:absolute;inset:0;pointer-events:none;
@@ -565,7 +566,7 @@ h3{font-size:clamp(1.1rem,2vw,1.5rem);font-weight:700}
 /* ============================================================
    UTILITY
    ============================================================ */
-.container { max-width:1200px;margin:0 auto;padding:0 24px }
+.container { max-width:1200px;margin:0 auto;padding:0 }
 .mt-20 { margin-top:20px }
 .mt-40 { margin-top:40px }
 .mb-20 { margin-bottom:20px }
