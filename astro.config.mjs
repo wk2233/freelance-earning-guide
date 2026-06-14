@@ -4,7 +4,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://ziyouzhuanqian.com',
+  site: 'https://wk2233.github.io',
+  base: '/freelance-earning-guide',
   integrations: [sitemap()],
   markdown: {
     shikiConfig: {
