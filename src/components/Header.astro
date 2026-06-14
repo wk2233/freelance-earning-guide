@@ -1,66 +1,45 @@
----
-const navLinks = [
-  { href: '/', label: '首页' },
-  { href: '/programming', label: '编程开发' },
-  { href: '/design', label: '设计创意' },
-  { href: '/writing', label: '写作内容' },
-  { href: '/marketing', label: '营销增长' },
-  { href: '/tools', label: '工具' },
-  { href: '/about', label: '关于' },
-];
----
-
-<header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-orange-100 shadow-sm">
-  <nav class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-2 no-underline">
-      <span class="text-2xl">🆓</span>
-      <span class="font-bold text-lg text-stone-800">自由赚钱指南</span>
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-100">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/freelance-earning-guide/" class="flex items-center gap-2.5 no-underline group">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-shadow">
+        F
+      </div>
+      <span class="font-bold text-lg text-slate-800 tracking-tight">自由赚钱指南</span>
     </a>
 
     <!-- Desktop nav -->
-    <div class="hidden md:flex items-center gap-6">
-      {navLinks.map(link => (
-        <a
-          href={link.href}
-          class="text-sm text-stone-500 hover:text-orange-500 transition-colors no-underline"
-        >
-          {link.label}
-        </a>
-      ))}
+    <div class="hidden md:flex items-center gap-1">
+      <a href="/freelance-earning-guide/" class="nav-link px-3 py-2 text-sm font-medium text-slate-500 hover:text-blue-600 no-underline transition-colors">首页</a>
+      <a href="/freelance-earning-guide/programming/" class="nav-link px-3 py-2 text-sm font-medium text-slate-500 hover:text-blue-600 no-underline transition-colors">编程</a>
+      <a href="/freelance-earning-guide/design/" class="nav-link px-3 py-2 text-sm font-medium text-slate-500 hover:text-blue-600 no-underline transition-colors">设计</a>
+      <a href="/freelance-earning-guide/writing/" class="nav-link px-3 py-2 text-sm font-medium text-slate-500 hover:text-blue-600 no-underline transition-colors">写作</a>
+      <a href="/freelance-earning-guide/marketing/" class="nav-link px-3 py-2 text-sm font-medium text-slate-500 hover:text-blue-600 no-underline transition-colors">营销</a>
+      <a href="/freelance-earning-guide/tools/" class="nav-link px-3 py-2 text-sm font-medium text-slate-500 hover:text-blue-600 no-underline transition-colors">工具</a>
+      <a href="/freelance-earning-guide/about/" class="nav-link px-3 py-2 text-sm font-medium text-slate-500 hover:text-blue-600 no-underline transition-colors">关于</a>
     </div>
 
     <!-- Mobile hamburger -->
-    <button
-      id="menu-toggle"
-      class="md:hidden text-stone-600 p-2"
-      aria-label="Toggle menu"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <button id="menu-toggle" class="md:hidden p-2 text-slate-500 hover:text-blue-600 transition-colors" aria-label="Toggle menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
         <path d="M3 12h18M3 6h18M3 18h18"/>
       </svg>
     </button>
   </nav>
 
   <!-- Mobile menu -->
-  <div
-    id="mobile-menu"
-    class="hidden md:hidden bg-white border-t border-orange-50 px-4 py-3"
-  >
-    {navLinks.map(link => (
-      <a
-        href={link.href}
-        class="block py-2 text-sm text-stone-600 hover:text-orange-500 no-underline"
-      >
-        {link.label}
-      </a>
-    ))}
+  <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-lg border-t border-slate-100 px-6 py-4 shadow-xl">
+    <a href="/freelance-earning-guide/" class="block py-2.5 text-sm font-medium text-slate-600 hover:text-blue-600 no-underline">首页</a>
+    <a href="/freelance-earning-guide/programming/" class="block py-2.5 text-sm font-medium text-slate-600 hover:text-blue-600 no-underline">编程开发</a>
+    <a href="/freelance-earning-guide/design/" class="block py-2.5 text-sm font-medium text-slate-600 hover:text-blue-600 no-underline">设计创意</a>
+    <a href="/freelance-earning-guide/writing/" class="block py-2.5 text-sm font-medium text-slate-600 hover:text-blue-600 no-underline">写作内容</a>
+    <a href="/freelance-earning-guide/marketing/" class="block py-2.5 text-sm font-medium text-slate-600 hover:text-blue-600 no-underline">营销增长</a>
+    <a href="/freelance-earning-guide/tools/" class="block py-2.5 text-sm font-medium text-slate-600 hover:text-blue-600 no-underline">工具推荐</a>
+    <a href="/freelance-earning-guide/about/" class="block py-2.5 text-sm font-medium text-slate-600 hover:text-blue-600 no-underline">关于我们</a>
   </div>
 </header>
 
 <script>
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
-  toggle?.addEventListener('click', () => {
-    menu?.classList.toggle('hidden');
-  });
+  toggle?.addEventListener('click', () => menu?.classList.toggle('hidden'));
 </script>

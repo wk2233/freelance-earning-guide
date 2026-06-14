@@ -1,92 +1,75 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-interface Tool {
-  name: string;
-  description: string;
-  url: string;
-  category: string;
-}
-
 const toolCategories = [
   {
-    title: '💼 接单平台',
-    slug: 'freelance-platforms',
+    title: '💼 接单平台', slug: 'freelance', gradient: 'from-blue-600 to-indigo-600',
     tools: [
-      { name: 'Upwork', description: '全球最大的自由职业平台，覆盖各种技能领域', url: 'https://upwork.com' },
-      { name: 'Fiverr', description: '服务起价 $5，适合新手起步接单', url: 'https://fiverr.com' },
-      { name: '程序员客栈', description: '国内程序员远程接单平台', url: 'https://proginn.com' },
-      { name: '猪八戒网', description: '国内综合设计/开发/营销服务平台', url: 'https://zbj.com' },
+      { name: 'Upwork', desc: '全球最大自由职业平台，覆盖各种技能领域', url: 'https://upwork.com' },
+      { name: 'Fiverr', desc: '服务起价 $5，适合新手起步接单', url: 'https://fiverr.com' },
+      { name: '程序员客栈', desc: '国内程序员远程接单平台', url: 'https://proginn.com' },
+      { name: '猪八戒网', desc: '国内综合设计/开发/营销服务平台', url: 'https://zbj.com' },
     ],
   },
   {
-    title: '🎨 设计工具',
-    slug: 'design-tools',
+    title: '🎨 设计工具', slug: 'design', gradient: 'from-purple-600 to-pink-600',
     tools: [
-      { name: 'Canva', description: '零基础也能用的在线设计工具，模板丰富', url: 'https://canva.com' },
-      { name: 'Figma', description: '专业 UI/UX 设计工具，免费版功能强大', url: 'https://figma.com' },
-      { name: 'Remove.bg', description: 'AI 一键去背景，设计效率工具', url: 'https://remove.bg' },
+      { name: 'Canva', desc: '零基础也能用的在线设计工具，模板丰富', url: 'https://canva.com' },
+      { name: 'Figma', desc: '专业 UI/UX 设计工具，免费版功能强大', url: 'https://figma.com' },
+      { name: 'Remove.bg', desc: 'AI 一键去背景，设计效率工具', url: 'https://remove.bg' },
     ],
   },
   {
-    title: '✍️ 写作与内容',
-    slug: 'writing-tools',
+    title: '✍️ 写作与内容', slug: 'writing', gradient: 'from-pink-600 to-rose-600',
     tools: [
-      { name: 'Notion', description: '全能写作、笔记、知识管理工具', url: 'https://notion.so' },
-      { name: 'Grammarly', description: '英文写作语法检查与优化', url: 'https://grammarly.com' },
-      { name: 'Hemingway Editor', description: '让文章更简洁易读的英文编辑器', url: 'https://hemingwayapp.com' },
+      { name: 'Notion', desc: '全能写作、笔记、知识管理工具', url: 'https://notion.so' },
+      { name: 'Grammarly', desc: '英文写作语法检查与优化', url: 'https://grammarly.com' },
+      { name: 'Hemingway Editor', desc: '让文章更简洁易读的英文编辑器', url: 'https://hemingwayapp.com' },
     ],
   },
   {
-    title: '⚡ 效率工具',
-    slug: 'productivity',
+    title: '⚡ 效率工具', slug: 'productivity', gradient: 'from-emerald-600 to-teal-600',
     tools: [
-      { name: 'Trello', description: '项目管理看板，管理你的自由职业项目', url: 'https://trello.com' },
-      { name: 'Toggl', description: '时间追踪工具，按项目/客户计时', url: 'https://toggl.com' },
-      { name: 'Calendly', description: '日程预约工具，让客户轻松约你', url: 'https://calendly.com' },
+      { name: 'Trello', desc: '项目管理看板，管理自由职业项目', url: 'https://trello.com' },
+      { name: 'Toggl', desc: '时间追踪工具，按项目/客户计时', url: 'https://toggl.com' },
+      { name: 'Calendly', desc: '日程预约，让客户轻松约你', url: 'https://calendly.com' },
     ],
   },
 ];
 ---
 
-<BaseLayout title="工具推荐" description="自由职业者必备的接单平台、设计工具、写作工具和效率工具推荐">
+<BaseLayout title="工具推荐" description="自由职业者必备的接单平台、设计工具、写作工具和效率工具">
 
-<section class="max-w-4xl mx-auto px-4 py-12">
-  <div class="text-center mb-12">
-    <div class="text-5xl mb-4">🛠️</div>
-    <h1 class="text-3xl font-bold text-stone-800 mb-4">自由职业工具推荐</h1>
-    <p class="text-stone-500 text-lg">挑选最适合自由职业者的工具，提高效率，多赚钱</p>
+<section class="max-w-4xl mx-auto px-6 py-12">
+  <div class="text-center mb-16 reveal">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">🛠️ 工具推荐</h1>
+    <p class="text-lg text-slate-500">精选自由职业者必备工具，提高效率多赚钱</p>
+    <p class="text-xs text-slate-400 mt-4 bg-amber-50 border border-amber-200 py-2 px-4 rounded-full inline-block">ℹ️ 部分链接可能含联盟推广，不影响推荐质量</p>
   </div>
 
-  <p class="text-xs text-stone-400 text-center mb-8 bg-orange-50 py-2 px-4 rounded-full inline-block mx-auto w-full max-w-md">
-    ℹ️ 部分链接可能包含联盟推广，但不影响推荐质量
-  </p>
-
   <div class="space-y-8">
-    {toolCategories.map(cat => (
-      <section class="bg-white border border-orange-100 rounded-xl p-6">
-        <h2 class="text-xl font-bold text-stone-700 mb-4">{cat.title}</h2>
-        <div class="grid gap-4 md:grid-cols-2">
-          {cat.tools.map(tool => (
-            <a
-              href={tool.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="block bg-stone-50 rounded-lg p-4 hover:bg-orange-50 transition-colors no-underline border border-transparent hover:border-orange-100"
-            >
-              <h3 class="font-semibold text-stone-800 text-sm mb-1">{tool.name}</h3>
-              <p class="text-xs text-stone-500">{tool.description}</p>
-            </a>
-          ))}
+    {toolCategories.map((cat, i) => (
+      <section class={`reveal reveal-delay-${Math.min(i, 4)} bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden`}>
+        <div class={`bg-gradient-to-r ${cat.gradient} px-6 py-4`}>
+          <h2 class="text-lg font-bold text-white">{cat.title}</h2>
+        </div>
+        <div class="p-6">
+          <div class="grid md:grid-cols-2 gap-3">
+            {cat.tools.map(tool => (
+              <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                 class="card-hover block bg-slate-50 rounded-xl p-4 no-underline group border border-transparent">
+                <h3 class="font-semibold text-slate-800 text-sm mb-1 group-hover:text-blue-600 transition-colors">{tool.name}</h3>
+                <p class="text-xs text-slate-500">{tool.desc}</p>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
     ))}
   </div>
 
-  <div class="text-center mt-12">
-    <a href="/" class="inline-block text-stone-400 hover:text-orange-500 text-sm no-underline">
-      &larr; 返回首页
-    </a>
+  <div class="text-center mt-12 reveal">
+    <a href="/freelance-earning-guide/" class="text-slate-400 hover:text-blue-600 text-sm no-underline transition-colors">← 返回首页</a>
   </div>
 </section>
 
